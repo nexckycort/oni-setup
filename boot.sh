@@ -1,18 +1,21 @@
-set -e
+#!/usr/bin/env bash
+set -Eeuo pipefail
 
-echo "=> Ubuntu 24.04+ installations only!"
-echo -e "\nBegin installation (or abort with ctrl+c)..."
+for dependency in curl tar; do
+  command -v "$dependency" >/dev/null 2>&1 || {
+    printf 'Required command not found: %s\n' "$dependency" >&2
+    exit 1
+  }
+done
 
-sudo apt-get update >/dev/null
-sudo apt-get install -y git >/dev/null
+SETUP_DIR=$(mktemp -d)
+trap 'rm -rf -- "$SETUP_DIR"' EXIT
 
-if git config --global --get url.ssh://git@github.com/.insteadOf >/dev/null; then
-  git config --global --unset url.ssh://git@github.com/.insteadOf
-fi
+echo 'Downloading Oni Setup...'
+curl -fsSL --retry 3 https://github.com/nexckycort/oni-setup/archive/refs/heads/main.tar.gz \
+  -o "$SETUP_DIR/oni-setup.tar.gz"
+mkdir "$SETUP_DIR/source"
+tar -xzf "$SETUP_DIR/oni-setup.tar.gz" -C "$SETUP_DIR/source" --strip-components=1
 
-echo "Cloning Oni Setup..."
-rm -rf ~/.local/share/oni-setup
-git clone https://github.com/nexckycort/oni-setup.git ~/.local/share/oni-setup >/dev/null
-
-echo "Installation starting..."
-source ~/.local/share/oni-setup/install.sh
+echo 'Starting installation...'
+bash "$SETUP_DIR/source/install.sh" --apply

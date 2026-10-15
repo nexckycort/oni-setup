@@ -1,8 +1,9 @@
-# Oni Setup: A personal, opinionated setup for Ubuntu — just how I like it.
+# Oni Setup: A personal, opinionated setup for Ubuntu and Arch Linux — just how I like it.
 
-**Oni Setup** is my personal and opinionated configuration for Ubuntu 24.04+,
-designed to automate the installation and setup of essential terminal and
-desktop tools, as well as the application of custom dotfiles.
+**Oni Setup** is my personal and opinionated configuration for Ubuntu and
+Arch Linux (including CachyOS), designed to automate the installation and setup
+of essential terminal and desktop tools, as well as the application of custom
+dotfiles.
 
 This setup is based on the excellent work of Basecamp's
 [Omakub project](https://github.com/basecamp/omakub).
@@ -11,7 +12,7 @@ This setup is based on the excellent work of Basecamp's
 
 ## Requirements
 
-- Ubuntu 24.04 or newer
+- Ubuntu 24.04, 26.04, or 26.10; Arch Linux; or CachyOS (x86_64)
 - Internet connection to download packages and dotfiles
 - User with sudo privileges
 
@@ -19,8 +20,7 @@ This setup is based on the excellent work of Basecamp's
 
 ## Installation
 
-Run the bootstrap script which clones the repository and starts the automatic
-installation:
+Run the bootstrap script. It automatically detects your distribution:
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/nexckycort/oni-setup/main/boot.sh)"

@@ -1,0 +1,3 @@
+*.oni-backup-*
+*.log
+.env
